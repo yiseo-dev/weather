@@ -4,10 +4,10 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/project?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://database-1.c16a4sk2iwmr.ap-northeast-2.rds.amazonaws.com:3306/projectdb
     driver-className: com.mysql.cj.jdbc.Driver
-    userName: root
-    password: 200356family
+    userName: admin
+    password: master2024
 
   jpa:
     database: mysql
