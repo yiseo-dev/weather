@@ -11,7 +11,8 @@ spring:
 
   jpa:
     database: mysql
-
+    show:
+      sql: true
 
 logging:
   level:
