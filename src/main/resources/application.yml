@@ -14,6 +14,9 @@ spring:
     show:
       sql: true
 
+  jwt:
+    secret: B6C899641631289237CFEB5C9F6629CB04A12A1FD2910A51A0E0544134BDC6AC
+
 logging:
   level:
     org.hibernate.SQL: debug
