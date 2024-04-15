@@ -13,7 +13,7 @@ public class Weather {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "WEATHER_ID")
-    private long weatherId;
+    private Long weatherId;
     @Column(name = "LOC_ID")
     private long locId;
     @Column(name = "TEMP_MIN")

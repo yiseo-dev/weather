@@ -1,4 +1,4 @@
-package model;
+package com.zerobase.weather.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

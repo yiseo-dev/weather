@@ -13,7 +13,7 @@ public class Diary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "DIARY_ID")
-    private long diaryId;
+    private Long diaryId;
     @Column(name = "USER_ID")
     private long userId;
     @Column(name = "DIARY_DATE")
