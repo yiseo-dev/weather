@@ -1,6 +1,6 @@
 package com.zerobase.weather.jwt;
 
-import com.zerobase.weather.entity.User;
+import com.zerobase.weather.entity.Users;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -28,7 +28,7 @@ public class JwtTokenProvider {
     private final Key key;
 
     // application.yml에서 secret 값 가져와서 key에 저장
-    public JwtTokenProvider(@Value("${jwt.secret}")String key) {
+    public JwtTokenProvider(@Value("${jwt.secret}") String key) {
         byte[] keyBytes = Decoders.BASE64.decode(key);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
@@ -80,7 +80,7 @@ public class JwtTokenProvider {
 
         //UserDetails 객체를 만들어서 Authentication return
         // UserDetails: interface, User: UserDetails를 구현한 class
-        UserDetails principal = new User();
+        UserDetails principal = new Users();
         return new UsernamePasswordAuthenticationToken(principal,"",authorities);
     }
 
