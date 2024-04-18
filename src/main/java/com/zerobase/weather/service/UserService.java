@@ -1,7 +1,8 @@
 package com.zerobase.weather.service;
 
 import com.zerobase.weather.model.JwtToken;
+import com.zerobase.weather.model.request.SignInRequest;
 
 public interface UserService {
-    JwtToken signIn(String username, String password);
+    JwtToken signIn(SignInRequest request);
 }

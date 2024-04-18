@@ -1,5 +1,6 @@
 package com.zerobase.weather.entity;
 
+import com.zerobase.weather.model.RoleEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,13 +33,14 @@ public class Users implements UserDetails {
     private String providerUserId;
     @Column(name = "LOC_ID")
     private long locId;
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role; // Enum으로 정의된 역할
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
-    private List<String> roles = new ArrayList<>();
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream().map(SimpleGrantedAuthority::new).toList();
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
+        return authorities;
     }
 
     @Override
