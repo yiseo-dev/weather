@@ -3,6 +3,7 @@ package com.zerobase.weather.service.impl;
 import com.zerobase.weather.entity.Users;
 import com.zerobase.weather.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,7 +30,11 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return User.builder()
                 .username(users.getUserNm())
                 .password(passwordEncoder.encode(users.getPassword()))
-                .roles(users.getRoles().toArray(new String[0]))
+                .authorities(users.getAuthorities().toArray(new GrantedAuthority[0]))
+//                .accountExpired(!users.isAccountNonExpired())
+//                .accountLocked(!users.isAccountNonLocked())
+//                .credentialsExpired(!users.isCredentialsNonExpired())
+//                .disabled(!users.isEnabled())
                 .build();
     }
 }

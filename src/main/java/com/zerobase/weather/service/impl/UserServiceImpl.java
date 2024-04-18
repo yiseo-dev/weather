@@ -2,6 +2,7 @@ package com.zerobase.weather.service.impl;
 
 import com.zerobase.weather.jwt.JwtTokenProvider;
 import com.zerobase.weather.model.JwtToken;
+import com.zerobase.weather.model.request.SignInRequest;
 import com.zerobase.weather.repository.UserRepository;
 import com.zerobase.weather.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +23,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public JwtToken signIn(String username, String password) {
+    public JwtToken signIn(SignInRequest request) {
         // 1. username + password를 기반으로 Authentication 객체 생성
         // 이때 authentication은 인증 여부를 확인하는 authenticated 값이 false
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+        String userNm = request.getUserNm();
+        String userPw = request.getUserPw();
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userNm, userPw);
 
         // 2. 실제 검증 .authenticate() 메서드를 통해 요청된 User에 대한 검증 진행
-        // authenticate 메서드가 실행될 때 CustomUserDetailsService에서 만든 loadUserByUsername 메서드 실행
+        // authenticate 메서드가 실행될 때 UserDetailsService에서 만든 loadUserByUsername 메서드 실행
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
