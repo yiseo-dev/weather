@@ -1,14 +1,12 @@
-package config;
+package com.zerobase.weather.jwt;
 
-import com.zerobase.weather.entity.User;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.zerobase.weather.entity.Users;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SecurityException;
 import lombok.extern.slf4j.Slf4j;
-import model.JwtToken;
+import com.zerobase.weather.model.JwtToken;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,10 +16,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import java.net.Authenticator;
 import java.security.Key;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -32,7 +28,7 @@ public class JwtTokenProvider {
     private final Key key;
 
     // application.yml에서 secret 값 가져와서 key에 저장
-    public JwtTokenProvider(@Value("${jwt.secret}")String key) {
+    public JwtTokenProvider(@Value("${jwt.secret}") String key) {
         byte[] keyBytes = Decoders.BASE64.decode(key);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
@@ -84,8 +80,28 @@ public class JwtTokenProvider {
 
         //UserDetails 객체를 만들어서 Authentication return
         // UserDetails: interface, User: UserDetails를 구현한 class
-        UserDetails principal = new User();
+        UserDetails principal = new Users();
         return new UsernamePasswordAuthenticationToken(principal,"",authorities);
+    }
+
+    // 토큰 정보 검증
+    public boolean validateToken(String token) {
+        try{
+         Jwts.parser()
+                 .verifyWith((SecretKey) key)
+                 .build()
+                 .parseClaimsJws(token);
+         return true;
+        }catch(SecurityException | MalformedJwtException e) {
+            log.info("Invalid JWT Token", e);
+        }catch (ExpiredJwtException e) {
+            log.info("Expired JWT Token", e);
+        }catch(UnsupportedJwtException e) {
+            log.info("Unsupported JWT Token",e);
+        }catch(IllegalArgumentException e) {
+            log.info("JWT claims string is empty", e);
+        }
+        return false;
     }
 
     private Claims parseClaims(String accessToken) {
