@@ -36,6 +36,10 @@ public class Users implements UserDetails {
     @Enumerated(EnumType.STRING)
     private RoleEnum role; // Enum으로 정의된 역할
 
+    public Users(String userNm) {
+        this.userNm = userNm;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();

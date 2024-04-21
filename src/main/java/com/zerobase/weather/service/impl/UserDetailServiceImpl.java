@@ -1,6 +1,8 @@
 package com.zerobase.weather.service.impl;
 
 import com.zerobase.weather.entity.Users;
+import com.zerobase.weather.exception.CustomException;
+import com.zerobase.weather.model.ErrorEnum;
 import com.zerobase.weather.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import static com.zerobase.weather.model.ErrorEnum.USER_NOT_FOUND;
 
 
 @Service
@@ -23,7 +27,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         return userRepository.findByUserNm(userName)
                 .map(this::createUserDetails)
-                .orElseThrow(() -> new UsernameNotFoundException("해당하는 회원을 찾을 수 없습니다."));
+                .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
     }
 
     private UserDetails createUserDetails(Users users) {

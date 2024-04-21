@@ -1,6 +1,8 @@
 package com.zerobase.weather.jwt;
 
 import com.zerobase.weather.entity.Users;
+import com.zerobase.weather.exception.CustomException;
+import com.zerobase.weather.model.ErrorEnum;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -21,6 +23,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
+
+import static com.zerobase.weather.model.ErrorEnum.TOKEN_PERMISSION_ERROR;
 
 @Slf4j
 @Component
@@ -69,7 +73,7 @@ public class JwtTokenProvider {
         // Jwt 토큰 복호화
         Claims claims = parseClaims(accessToken);
         if(claims.get("auth") == null) {
-            throw new RuntimeException("권한 정보가 없는 토큰입니다.");
+            throw new CustomException(TOKEN_PERMISSION_ERROR);
         }
 
         //클레임에서 권한 정보 가져오기
@@ -80,7 +84,8 @@ public class JwtTokenProvider {
 
         //UserDetails 객체를 만들어서 Authentication return
         // UserDetails: interface, User: UserDetails를 구현한 class
-        UserDetails principal = new Users();
+        String userNm = claims.getSubject();
+        UserDetails principal = new Users(userNm);
         return new UsernamePasswordAuthenticationToken(principal,"",authorities);
     }
 
@@ -106,10 +111,12 @@ public class JwtTokenProvider {
 
     private Claims parseClaims(String accessToken) {
         try {
-            return (Claims) Jwts.parser()
+            return Jwts
+                    .parser()
                     .verifyWith((SecretKey) key)
                     .build()
-                    .parseSignedClaims(accessToken);
+                    .parseSignedClaims(accessToken)
+                    .getPayload();
         }catch (ExpiredJwtException e) {
             return e.getClaims();
         }
