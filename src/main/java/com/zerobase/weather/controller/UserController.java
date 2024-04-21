@@ -1,14 +1,15 @@
 package com.zerobase.weather.controller;
 
+import com.zerobase.weather.config.Response;
 import com.zerobase.weather.model.JwtToken;
 import com.zerobase.weather.model.request.SignInRequest;
+import com.zerobase.weather.model.response.user.UserInfoResponse;
 import com.zerobase.weather.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -27,5 +28,17 @@ public class UserController {
         log.info("=================[END] signIn================");
 
         return jwtToken;
+    }
+    @GetMapping("/user-info")
+    public ResponseEntity<Response> findUserInfo() {
+        log.info("=================[START] findUserInfo==================");
+
+        UserInfoResponse response = userService.findUserInfo();
+
+        log.info("response: {}", response);
+        log.info("=================[END] signIn================");
+        return ResponseEntity.ok(Response.builder()
+                .data(response)
+                .build());
     }
 }
