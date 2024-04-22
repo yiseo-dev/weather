@@ -3,7 +3,6 @@ package com.zerobase.weather.controller;
 import com.zerobase.weather.config.Response;
 import com.zerobase.weather.model.JwtToken;
 import com.zerobase.weather.model.request.SignInRequest;
-import com.zerobase.weather.model.request.SignUpRequest;
 import com.zerobase.weather.model.response.user.UserInfoResponse;
 import com.zerobase.weather.service.UserService;
 import lombok.RequiredArgsConstructor;

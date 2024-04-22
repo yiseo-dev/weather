@@ -12,7 +12,6 @@ public enum ErrorEnum {
     AUTHENTICATION_INFORMATION_NOT_FOUND(HttpStatus.NON_AUTHORITATIVE_INFORMATION, "권한 정보를 찾을 수 없습니다."),
     CAN_NOT_USE_NAME(HttpStatus.NOT_ACCEPTABLE, "이미 사용 중인 사용자 이름입니다."),
     ;
-
     private final HttpStatus httpStatus;
     private final String errMsg;
 }

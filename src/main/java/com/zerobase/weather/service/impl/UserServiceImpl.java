@@ -1,6 +1,8 @@
 package com.zerobase.weather.service.impl;
 
+
 import com.zerobase.weather.entity.Users;
+
 import com.zerobase.weather.exception.CustomException;
 import com.zerobase.weather.jwt.JwtTokenProvider;
 import com.zerobase.weather.model.JwtToken;
@@ -24,6 +26,8 @@ import java.util.Optional;
 
 import static com.zerobase.weather.model.ErrorEnum.AUTHENTICATION_INFORMATION_NOT_FOUND;
 import static com.zerobase.weather.model.ErrorEnum.CAN_NOT_USE_NAME;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
