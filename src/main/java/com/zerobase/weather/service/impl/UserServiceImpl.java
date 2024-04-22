@@ -1,9 +1,12 @@
 package com.zerobase.weather.service.impl;
 
+import com.zerobase.weather.entity.Users;
 import com.zerobase.weather.exception.CustomException;
 import com.zerobase.weather.jwt.JwtTokenProvider;
 import com.zerobase.weather.model.JwtToken;
+import com.zerobase.weather.model.RoleEnum;
 import com.zerobase.weather.model.request.SignInRequest;
+import com.zerobase.weather.model.request.SignUpRequest;
 import com.zerobase.weather.model.response.user.UserInfoResponse;
 import com.zerobase.weather.repository.UserRepository;
 import com.zerobase.weather.service.UserService;
@@ -13,10 +16,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 import static com.zerobase.weather.model.ErrorEnum.AUTHENTICATION_INFORMATION_NOT_FOUND;
+import static com.zerobase.weather.model.ErrorEnum.CAN_NOT_USE_NAME;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +32,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -52,5 +60,17 @@ public class UserServiceImpl implements UserService {
         }
         log.info("권한 정보 상세: {}",authentication.getDetails());
         return UserInfoResponse.builder().userNm(authentication.getName()).build();
+    }
+
+    @Override
+    @Transactional
+    public void regUser(SignUpRequest request) {
+        Optional<Users> users = userRepository.findByUserNm(request.getUserNm());
+        if (users.isPresent()) {
+            throw new CustomException(CAN_NOT_USE_NAME);
+        }
+        // Password 암호화
+        String encodedPassword = passwordEncoder.encode(request.getUserPw());
+        userRepository.save(request.toEntity(encodedPassword, RoleEnum.USER));
     }
 }
