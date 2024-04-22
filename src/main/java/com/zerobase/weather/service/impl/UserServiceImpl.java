@@ -19,11 +19,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Optional;
 
-import static com.zerobase.weather.model.ErrorEnum.AUTHENTICATION_INFORMATION_NOT_FOUND;
-import static com.zerobase.weather.model.ErrorEnum.CAN_NOT_USE_NAME;
+import static com.zerobase.weather.model.ErrorEnum.*;
 
 @Service
 @RequiredArgsConstructor
@@ -56,10 +56,26 @@ public class UserServiceImpl implements UserService {
     public  UserInfoResponse findUserInfo() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication.getName() == null) {
+            log.warn("Authentication information not found");
             throw new CustomException(AUTHENTICATION_INFORMATION_NOT_FOUND);
         }
-        log.info("권한 정보 상세: {}",authentication.getDetails());
-        return UserInfoResponse.builder().userNm(authentication.getName()).build();
+
+        log.info("회원 이름(id): {}",authentication.getName());
+
+        return userRepository.findByUserNm(authentication.getName())
+                .map(user -> UserInfoResponse.builder()
+                        .userId(user.getUserId())
+                        .userEmail(user.getUserEmail())
+                        .userNm(user.getUserNm())
+                        .role(user.getRole())
+                        .providerUserId(user.getProviderUserId())
+                        .provider(user.getProvider())
+                        .locId(user.getLocId())
+                        .build())
+                .orElseThrow(() -> {
+                    log.error("User not found with userName: {}", authentication.getName());
+                    return new CustomException(USER_NOT_FOUND);
+                });
     }
 
     @Override
