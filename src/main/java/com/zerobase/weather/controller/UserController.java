@@ -7,6 +7,7 @@ import com.zerobase.weather.model.response.user.UserInfoResponse;
 import com.zerobase.weather.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,5 +41,15 @@ public class UserController {
         return ResponseEntity.ok(Response.builder()
                 .data(response)
                 .build());
+    }
+    @PostMapping("/sign-up")
+    public ResponseEntity<HttpStatus> regUser(@RequestBody SignUpRequest request) {
+        log.info("=================[START] regUser==================");
+        log.info("request: {}", request);
+
+        userService.regUser(request);
+
+        log.info("=================[END] regUser================");
+        return ResponseEntity.ok(HttpStatus.CREATED);
     }
 }

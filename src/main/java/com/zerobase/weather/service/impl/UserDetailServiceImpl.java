@@ -33,7 +33,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     private UserDetails createUserDetails(Users users) {
         return User.builder()
                 .username(users.getUserNm())
-                .password(passwordEncoder.encode(users.getPassword()))
+                .password(users.getPassword())
                 .authorities(users.getAuthorities().toArray(new GrantedAuthority[0]))
 //                .accountExpired(!users.isAccountNonExpired())
 //                .accountLocked(!users.isAccountNonLocked())
