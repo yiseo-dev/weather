@@ -2,6 +2,8 @@ package com.zerobase.weather.model.response.weather;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.zerobase.weather.model.WeatherInfo;
+import com.zerobase.weather.model.WeatherMain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,10 +17,10 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WeatherConvertResponse {
     @JsonProperty("weather")
-    private List<Object> weather;
+    private List<WeatherInfo> weather;
 
     @JsonProperty("main")
-    private Object main;
+    private WeatherMain main;
 
     @JsonProperty("id")
     private String locCd;

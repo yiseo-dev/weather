@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class WeatherInfo {
-    String weatherCondition;
-    String weatherCondDescr;
-    String icon;
+    private String main;
+    private String description;
+    private String icon;
 }

@@ -23,11 +23,20 @@ public class WeatherServiceImpl implements WeatherService {
     @Override
     public WeatherInfoResponse getWeatherInfo(String cityId) {
         WeatherConvertResponse dto = weatherClient.getWeatherInfo(cityId,key);
+
         log.info("response : {}", dto);
-        Object main = dto.getMain();
-        List<Object> weatherList = dto.getWeather();
-        Object weather = weatherList.get(0);
+
+        WeatherMain main = dto.getMain();
+        WeatherInfo weather = dto.getWeather().get(0);
+
         return WeatherInfoResponse.builder()
+                .icon(weather.getIcon())
+                .weatherCondition(weather.getMain())
+                .weatherCondDescr(weather.getDescription())
+                .temp(main.getTemp())
+                .locCd(dto.getLocCd())
+                .locNm(dto.getLocNm())
+                .unixDt(dto.getUnixDt())
                 .build();
     }
 }
