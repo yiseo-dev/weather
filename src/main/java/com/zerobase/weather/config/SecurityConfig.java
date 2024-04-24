@@ -32,7 +32,7 @@ public class SecurityConfig {
                 // 해당 API에 대해서는 모든 요청을 허가
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers("v1/users/*")
                 // USER 권한이 있어야 요청할 수 있음
-                .permitAll().requestMatchers("v1/users/*").hasRole("USER"))
+                .permitAll().requestMatchers("v1/weather/*").hasRole("USER"))
                 // JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class).build();
     }
