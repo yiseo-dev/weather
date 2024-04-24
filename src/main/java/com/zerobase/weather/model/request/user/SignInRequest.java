@@ -1,4 +1,4 @@
-package com.zerobase.weather.model.request;
+package com.zerobase.weather.model.request.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

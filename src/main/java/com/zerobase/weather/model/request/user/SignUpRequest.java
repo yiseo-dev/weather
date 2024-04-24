@@ -1,4 +1,4 @@
-package com.zerobase.weather.model.request;
+package com.zerobase.weather.model.request.user;
 
 import com.zerobase.weather.entity.Users;
 import com.zerobase.weather.model.RoleEnum;
