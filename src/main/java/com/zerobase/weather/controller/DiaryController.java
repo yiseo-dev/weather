@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class DiaryController {
     private final DiaryService diaryService;
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<Response> createDiary(@RequestBody CreateDiaryRequest createDiary) {
+        diaryService.createDiary(createDiary);
         return ResponseEntity.ok(Response.builder()
                         .data(HttpStatus.CREATED)
                         .build());
