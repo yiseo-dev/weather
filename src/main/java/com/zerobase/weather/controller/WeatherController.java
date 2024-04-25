@@ -19,9 +19,16 @@ public class WeatherController {
 
     @GetMapping("/open-api")
     public ResponseEntity<Response> getWeatherInfo(@RequestParam("id") String cityId) {
+        log.info("=================[START] getWeatherInfo==================");
+        log.info("request: {}", cityId);
+
+        WeatherInfoResponse response = weatherService.getWeatherInfo(cityId);
+
+        log.info("response: {}", response);
+        log.info("=================[END] getWeatherInfo==================");
 
         return ResponseEntity.ok(Response.builder()
-                .data(weatherService.getWeatherInfo(cityId))
+                .data(response)
                 .build());
     }
 }
