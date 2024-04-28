@@ -2,15 +2,14 @@ package com.zerobase.weather.controller;
 
 import com.zerobase.weather.config.Response;
 import com.zerobase.weather.model.request.diary.CreateDiaryRequest;
+import com.zerobase.weather.model.request.diary.FindDiaryRequest;
+import com.zerobase.weather.model.response.diary.DiaryInfoResponse;
 import com.zerobase.weather.service.DiaryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -24,6 +23,19 @@ public class DiaryController {
         diaryService.createDiary(createDiary);
         return ResponseEntity.ok(Response.builder()
                         .data(HttpStatus.CREATED)
+                        .build());
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<Response> findDiaryByUser(FindDiaryRequest request) {
+        log.info("=================[START] findDiaryByUser==================");
+        log.info("request: {}", request);
+        DiaryInfoResponse response = diaryService.findDiaryByUser(request);
+
+        log.info("response: {}", response);
+        log.info("=================[END] findDiaryByUser==================");
+        return ResponseEntity.ok(Response.builder()
+                        .data(response)
                         .build());
     }
 
