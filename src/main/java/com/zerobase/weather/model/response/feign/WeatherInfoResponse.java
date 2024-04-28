@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,7 +18,7 @@ public class WeatherInfoResponse {
     private String weatherCondition;
     private String weatherCondDescr;
     private String icon;
-    private Long temp;
+    private BigDecimal temp;
     private String locCd;
     private String locNm;
     private Long unixDt;

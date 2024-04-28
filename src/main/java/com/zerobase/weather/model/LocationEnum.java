@@ -22,4 +22,13 @@ public enum LocationEnum {
     private String locNm;
     private String locEngNm;
 
+    // locCd를 기반으로 locId를 반환하는 정적 메소드
+    public static Integer getLocIdByLocCd(String locCd) {
+        for (LocationEnum location : LocationEnum.values()) {
+            if (location.getLocCd().equals(locCd)) {
+                return location.getLocId();
+            }
+        }
+        return null;  // locCd가 일치하는 항목이 없을 경우 null을 반환
+    }
 }

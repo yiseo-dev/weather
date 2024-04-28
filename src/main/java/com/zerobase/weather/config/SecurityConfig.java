@@ -31,8 +31,8 @@ public class SecurityConfig {
                 // JWT를 사용하기 때문에 세션을 사용하지 않음
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS) )
                 // 해당 API에 대해서는 모든 요청을 허가
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers("v1/users/*").permitAll()
-                .requestMatchers("v1/weather/*").hasRole("ADMIN")
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/v1/users/*").permitAll()
+                .requestMatchers("/v1/weather/*").hasRole("ADMIN")
                 .requestMatchers("/v1/diaries/*").hasRole("USER")
                 )
                 // JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행

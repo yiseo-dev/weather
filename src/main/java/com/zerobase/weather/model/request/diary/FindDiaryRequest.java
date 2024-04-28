@@ -1,16 +1,16 @@
-package com.zerobase.weather.model;
+package com.zerobase.weather.model.request.diary;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class WeatherMain {
-    private BigDecimal temp;
+public class FindDiaryRequest {
+    private Long userId;
+    private String strDate;
+    private String endDate;
 }
