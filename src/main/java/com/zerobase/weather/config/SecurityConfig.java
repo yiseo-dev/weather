@@ -26,6 +26,7 @@ public class SecurityConfig {
         /* swagger */
         "/v1/users/*", "/swagger-ui/**", "/v3/api-docs/**"
       , "/swagger-ui.html", "/swagger/**", "/webjars/**"
+      , "/v1/diaries/*", "/v1/weather/*"
     };
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {

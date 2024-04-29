@@ -65,9 +65,13 @@ public class DiaryServiceImpl implements DiaryService {
             }
         }
 
+        int sleepAvg = 0;
+        if(diaryInfoList.size()>0){
+            sleepAvg = sum / diaryInfoList.size();
+        }
         return DiaryInfoResponse.builder()
                 .diaryInfoList(diaryInfoList)
-                .sleepAvg(sum / diaryInfoList.size())
+                .sleepAvg(sleepAvg)
                 .build();
     }
 
