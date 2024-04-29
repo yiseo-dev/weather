@@ -9,7 +9,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FindDiaryRequest {
-    private Long userId;
-    private String yearMonth;
+public class UpdateDiaryRequest {
+    private Long diaryId;
+    private String diaryContent;
+    private Integer sleep;
+    private String emotionCd;
+    private String imgUrl;
+    private String activityCd;
 }
