@@ -64,7 +64,6 @@ public class WeatherServiceImpl implements WeatherService {
     }
 
     @Override
-    @Transactional
     public void createWeatherByCity(CreateWeatherCityRequest request) {
         log.info("=============createWeatherCity [START]==================");
         BigDecimal celsius = this.convertFahrenToCels(request.getTemp());

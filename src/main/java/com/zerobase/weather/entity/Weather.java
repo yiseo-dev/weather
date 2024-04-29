@@ -18,16 +18,22 @@ public class Weather {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "WEATHER_ID")
     private Long weatherId;
+
     @Column(name = "LOC_ID")
     private long locId;
+
     @Column(name = "TEMP")
     private BigDecimal temp;
+
     @Column(name = "WTH_COND")
     private String wthCond;
+
     @Column(name = "WTH_COND_DESC")
     private String wthCondDesc;
+
     @Column(name = "WTH_ICON_URL")
     private String wthIconUrl;
+
     @Column(name = "WTH_DATE")
     private String wthDate;
 }

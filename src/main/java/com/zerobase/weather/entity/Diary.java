@@ -16,20 +16,29 @@ public class Diary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "DIARY_ID")
     private Long diaryId;
+
     @Column(name = "USER_ID")
     private long userId;
+
     @Column(name = "DIARY_DATE")
     private String diaryDate;
+
     @Column(name = "DIARY_CONTENT")
     private String diaryContent;
-    @Column(name = "WEATHER_ID")
-    private long weatherId;
+
+    @ManyToOne
+    @JoinColumn(name = "WEATHER_ID")
+    private Weather weather;
+
     @Column(name = "ACTIVITY_CD")
     private String activityCd;
+
     @Column(name = "EMOTION_CD")
     private String emotionCd;
+
     @Column(name = "sleep")
     private Integer sleep;
+
     @Column(name = "IMG_URL")
     private String imgUrl;
 }
