@@ -33,8 +33,9 @@ public class DiaryController {
                         .build());
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<Response> findDiaryByUser(FindDiaryRequest request) {
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Response> findDiaryByUser(@PathVariable(value = "userId") Long userId, FindDiaryRequest request) {
+        request.setUserId(userId);
         log.info("=================[START] findDiaryByUser==================");
         log.info("request: {}", request);
 
@@ -47,8 +48,8 @@ public class DiaryController {
                         .build());
     }
 
-    @GetMapping("/diary")
-    public ResponseEntity<Response> findDiaryById(@RequestParam Long diaryId) {
+    @GetMapping("/diary/{diaryId}")
+    public ResponseEntity<Response> findDiaryById(@PathVariable(value = "diaryId") Long diaryId) {
         log.info("=================[START] findDiaryById==================");
         log.info("diaryId: {}", diaryId);
 
@@ -62,8 +63,9 @@ public class DiaryController {
                         .build());
     }
 
-    @PatchMapping("/diary")
-    public ResponseEntity<Response> updateDiaryById(@RequestBody UpdateDiaryRequest request) {
+    @PatchMapping("/diary/{diaryId}")
+    public ResponseEntity<Response> updateDiaryById(@PathVariable(value = "diaryId") Long diaryId,@RequestBody UpdateDiaryRequest request) {
+        request.setDiaryId(diaryId);
         log.info("=================[START] updateDiaryById==================");
         log.info("request: {}", request);
 
@@ -75,8 +77,8 @@ public class DiaryController {
                         .build());
     }
 
-    @DeleteMapping("/diary")
-    public ResponseEntity<Response> deleteDiaryById(@RequestParam Long diaryId) {
+    @DeleteMapping("/diary/{diaryId}")
+    public ResponseEntity<Response> deleteDiaryById(@PathVariable(value = "diaryId") Long diaryId) {
         log.info("=================[START] deleteDiaryById==================");
         log.info("diaryId: {}", diaryId);
 
