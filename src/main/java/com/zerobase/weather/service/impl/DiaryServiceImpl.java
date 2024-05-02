@@ -13,14 +13,12 @@ import com.zerobase.weather.repository.WeatherRepository;
 import com.zerobase.weather.service.DiaryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.zerobase.weather.model.ErrorEnum.CAN_NOT_FOUND_DIARY;
 import static com.zerobase.weather.model.ErrorEnum.CAN_NOT_FOUND_WEATHER;
@@ -58,7 +56,6 @@ public class DiaryServiceImpl implements DiaryService {
         log.info("diaryInfo : {}", diaryInfo);
 
         List<DiaryInfo> diaryInfoList = DiaryInfo.toDto(diaryInfo);
-
         for(DiaryInfo infos : diaryInfoList) {
             if(infos.getSleep() != null){
                 sum += infos.getSleep();
