@@ -64,7 +64,8 @@ public class DiaryController {
     }
 
     @PatchMapping("/diary/{diaryId}")
-    public ResponseEntity<Response> updateDiaryById(@PathVariable(value = "diaryId") Long diaryId,@RequestBody UpdateDiaryRequest request) {
+    public ResponseEntity<Response> updateDiaryById(@PathVariable(value = "diaryId") Long diaryId
+                                                   ,@RequestBody UpdateDiaryRequest request) {
         request.setDiaryId(diaryId);
         log.info("=================[START] updateDiaryById==================");
         log.info("request: {}", request);
