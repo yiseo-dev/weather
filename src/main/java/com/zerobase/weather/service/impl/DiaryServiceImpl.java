@@ -77,8 +77,6 @@ public class DiaryServiceImpl implements DiaryService {
 
         Optional<Diary> diaryInfo = diaryRepository.findById(diaryId);
 
-
-
         return diaryInfo.map(diary -> DiaryInfo.builder()
                 .diaryId(diary.getDiaryId())
                 .diaryContent(diary.getDiaryContent())
