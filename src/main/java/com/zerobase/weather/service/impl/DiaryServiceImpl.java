@@ -125,11 +125,6 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     private void processDiaryInfo(DiaryInfo info) {
-        int sum = 0;
-        if (info.getSleep() != null) {
-            sum += info.getSleep();
-            info.setSum(sum);
-        }
         if (info.getActivityCd() != null) {
             info.setActivityNm(ActivityEnum.getActivityNmByCd(info.getActivityCd()));
         }

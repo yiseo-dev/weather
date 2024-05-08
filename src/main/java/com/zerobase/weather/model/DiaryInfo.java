@@ -26,8 +26,6 @@ public class DiaryInfo {
     private String emotionCd;
     private String emotionNm;
     private Integer sleep;
-    @Schema(hidden = true)
-    private Integer sum;
     private String imgUrl;
     private Long locId;
     private BigDecimal temp;
