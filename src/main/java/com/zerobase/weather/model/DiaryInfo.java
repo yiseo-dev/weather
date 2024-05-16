@@ -35,26 +35,6 @@ public class DiaryInfo {
     private String wthDate;
 
     public static DiaryInfo toDto(Diary diary) {
-//        List<DiaryInfo> result = new ArrayList<>();
-//        for(Diary entity : diary) {
-//            result.add(DiaryInfo.builder()
-//                            .diaryId(entity.getDiaryId())
-//                            .userId(entity.getUserId())
-//                            .diaryDate(entity.getDiaryDate())
-//                            .diaryContent(entity.getDiaryContent())
-//                            .activityCd(entity.getActivityCd())
-//                            .weatherId(entity.getWeather().getWeatherId())
-//                            .emotionCd(entity.getEmotionCd())
-//                            .sleep(entity.getSleep())
-//                            .imgUrl(entity.getImgUrl())
-//                            .locId(entity.getWeather().getLocId())
-//                            .temp(entity.getWeather().getTemp())
-//                            .wthCond(entity.getWeather().getWthCond())
-//                            .wthCondDesc(entity.getWeather().getWthCondDesc())
-//                            .wthDate(entity.getWeather().getWthDate())
-//                            .wthIconUrl(entity.getWeather().getWthIconUrl())
-//                            .build());
-//        }
         return DiaryInfo.builder()
                 .diaryId(diary.getDiaryId())
                 .userId(diary.getUserId())
