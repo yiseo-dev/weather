@@ -20,7 +20,7 @@ public class Weather {
     private Long weatherId;
 
     @Column(name = "LOC_ID")
-    private long locId;
+    private Integer locId;
 
     @Column(name = "TEMP")
     private BigDecimal temp;

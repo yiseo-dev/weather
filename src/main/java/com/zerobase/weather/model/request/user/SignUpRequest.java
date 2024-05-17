@@ -18,7 +18,7 @@ public class SignUpRequest {
     private String userEmail;
     private String provider;
     private String providerUserId;
-    private long locId;
+    private Integer locId;
     private RoleEnum role; // Enum으로 정의된 역할
 
     public Users toEntity(String encodedPw, RoleEnum role) {

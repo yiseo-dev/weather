@@ -6,19 +6,25 @@ import com.zerobase.weather.exception.CustomException;
 import com.zerobase.weather.model.ActivityEnum;
 import com.zerobase.weather.model.DiaryInfo;
 import com.zerobase.weather.model.EmotionEnum;
+import com.zerobase.weather.model.LocationEnum;
 import com.zerobase.weather.model.request.diary.CreateDiaryRequest;
 import com.zerobase.weather.model.request.diary.FindDiaryRequest;
 import com.zerobase.weather.model.request.diary.UpdateDiaryRequest;
 import com.zerobase.weather.model.response.diary.DiaryInfoResponse;
+import com.zerobase.weather.model.response.user.UserInfoResponse;
 import com.zerobase.weather.repository.DiaryRepository;
 import com.zerobase.weather.repository.WeatherRepository;
 import com.zerobase.weather.service.DiaryService;
+import com.zerobase.weather.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -33,11 +39,21 @@ import static com.zerobase.weather.model.ErrorEnum.CAN_NOT_FOUND_WEATHER;
 public class DiaryServiceImpl implements DiaryService {
     private final DiaryRepository diaryRepository;
     private final WeatherRepository weatherRepository;
-
+    private final UserService userService;
     @Override
     public void createDiary(CreateDiaryRequest request) {
-
-        Weather weather = weatherRepository.findById(request.getWeatherId()).orElseThrow(() -> new CustomException(CAN_NOT_FOUND_WEATHER));
+        Integer locId = null;
+        Weather weather = new Weather();
+        UserInfoResponse userInfo = userService.findUserInfo();
+        for(LocationEnum lc : LocationEnum.values()) {
+            if(userInfo.getLocId() == lc.getLocId()) {
+                locId = lc.getLocId();
+            }
+        }
+        List<Weather> weatherList = weatherRepository.findByLocIdAndWthDate(locId,getToday());
+        if(!CollectionUtils.isEmpty(weatherList)) {
+            weather = weatherList.get(0);
+        }
 
         diaryRepository.save(Diary.builder()
                 .diaryContent(request.getDiaryContent())
@@ -140,5 +156,10 @@ public class DiaryServiceImpl implements DiaryService {
                         .mapToInt(DiaryInfo::getSleep)
                         .average()
                         .orElse(0);
+    }
+
+    private static String getToday() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        return sdf.format(Calendar.getInstance().getTime());
     }
 }

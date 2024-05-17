@@ -4,8 +4,10 @@ import com.zerobase.weather.model.request.weather.CreateWeatherCityRequest;
 import com.zerobase.weather.model.response.feign.WeatherInfoResponse;
 import com.zerobase.weather.model.response.weather.WeatherConvertResponse;
 
+import java.util.List;
+
 public interface WeatherService {
-    WeatherInfoResponse getWeatherInfo(String cityId);
+    List<WeatherInfoResponse> getWeatherInfo();
 
     void createWeatherByCity(CreateWeatherCityRequest request);
 }

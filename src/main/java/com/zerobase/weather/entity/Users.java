@@ -32,7 +32,7 @@ public class Users implements UserDetails {
     @Column(name = "PROVIDER_USER_ID")
     private String providerUserId;
     @Column(name = "LOC_ID")
-    private long locId;
+    private Integer locId;
     @Enumerated(EnumType.STRING)
     private RoleEnum role; // Enum으로 정의된 역할
 
