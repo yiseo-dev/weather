@@ -17,5 +17,5 @@ public class UserInfoResponse {
     private String userEmail;
     private String provider;
     private String providerUserId;
-    private Long locId;
+    private Integer locId;
 }

@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -17,12 +19,11 @@ import org.springframework.web.bind.annotation.*;
 public class WeatherController {
     private final WeatherService weatherService;
 
-    @GetMapping("/city")
-    public ResponseEntity<Response> getWeatherInfo(@RequestParam("id") String cityId) {
+    @GetMapping("/cities")
+    public ResponseEntity<Response> getWeatherInfo() {
         log.info("=================[START] getWeatherInfo==================");
-        log.info("request: {}", cityId);
 
-        WeatherInfoResponse response = weatherService.getWeatherInfo(cityId);
+        List<WeatherInfoResponse> response = weatherService.getWeatherInfo();
 
         log.info("response: {}", response);
         log.info("=================[END] getWeatherInfo==================");

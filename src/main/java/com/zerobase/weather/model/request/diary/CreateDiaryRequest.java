@@ -13,7 +13,6 @@ public class CreateDiaryRequest {
     private Long userId;
     private String diaryDate;
     private String diaryContent;
-    private Long weatherId;
     private String activityCd;
     private String emotionCd;
     private Integer sleep;

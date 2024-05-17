@@ -27,7 +27,7 @@ public class DiaryInfo {
     private String emotionNm;
     private Integer sleep;
     private String imgUrl;
-    private Long locId;
+    private Integer locId;
     private BigDecimal temp;
     private String wthCond;
     private String wthCondDesc;

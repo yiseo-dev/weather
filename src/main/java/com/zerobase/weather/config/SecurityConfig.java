@@ -23,7 +23,7 @@ public class SecurityConfig {
     private final String[] PERMIT_URL_ARRAY = {
         /* swagger */
         "/v1/users/**", "/swagger-ui/**", "/v3/api-docs/**"
-      , "/swagger-ui.html", "/swagger/**", "/webjars/**"
+      , "/swagger-ui.html", "/swagger/**", "/webjars/**", "/v1/weather/**"
     };
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS) )
                 // 해당 API에 대해서는 모든 요청을 허가
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers(PERMIT_URL_ARRAY).permitAll()
-                .requestMatchers("/v1/weather/**").hasRole("ADMIN")
+//                .requestMatchers("/v1/weather/**").hasRole("ADMIN")
                 .requestMatchers("/v1/diaries/**").hasRole("USER")
                 )
                 // JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행
