@@ -3,10 +3,7 @@ package com.zerobase.weather.service.impl;
 import com.zerobase.weather.entity.Diary;
 import com.zerobase.weather.entity.Weather;
 import com.zerobase.weather.exception.CustomException;
-import com.zerobase.weather.model.ActivityEnum;
-import com.zerobase.weather.model.DiaryInfo;
-import com.zerobase.weather.model.EmotionEnum;
-import com.zerobase.weather.model.LocationEnum;
+import com.zerobase.weather.model.*;
 import com.zerobase.weather.model.request.diary.CreateDiaryRequest;
 import com.zerobase.weather.model.request.diary.FindDiaryRequest;
 import com.zerobase.weather.model.request.diary.UpdateDiaryRequest;
@@ -30,8 +27,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.zerobase.weather.model.ErrorEnum.CAN_NOT_FOUND_DIARY;
-import static com.zerobase.weather.model.ErrorEnum.CAN_NOT_FOUND_WEATHER;
+import static com.zerobase.weather.model.ErrorEnum.*;
 
 @Slf4j
 @Service
@@ -45,26 +41,31 @@ public class DiaryServiceImpl implements DiaryService {
         Integer locId = null;
         Weather weather = new Weather();
         UserInfoResponse userInfo = userService.findUserInfo();
-        for(LocationEnum lc : LocationEnum.values()) {
-            if(userInfo.getLocId() == lc.getLocId()) {
-                locId = lc.getLocId();
-            }
-        }
-        List<Weather> weatherList = weatherRepository.findByLocIdAndWthDate(locId,getToday());
-        if(!CollectionUtils.isEmpty(weatherList)) {
-            weather = weatherList.get(0);
-        }
 
-        diaryRepository.save(Diary.builder()
-                .diaryContent(request.getDiaryContent())
-                .diaryDate(request.getDiaryDate())
-                .sleep(request.getSleep())
-                .activityCd(request.getActivityCd())
-                .imgUrl(request.getImgUrl())
-                .userId(request.getUserId())
-                .weather(weather)
-                .emotionCd(request.getEmotionCd())
-                .build());
+        if(Objects.equals(request.getUserId(), userInfo.getUserId())) {
+            for(LocationEnum lc : LocationEnum.values()) {
+                if(userInfo.getLocId() == lc.getLocId()) {
+                    locId = lc.getLocId();
+                }
+            }
+            List<Weather> weatherList = weatherRepository.findByLocIdAndWthDate(locId,getToday());
+            if(!CollectionUtils.isEmpty(weatherList)) {
+                weather = weatherList.get(0);
+            }
+
+            diaryRepository.save(Diary.builder()
+                    .diaryContent(request.getDiaryContent())
+                    .diaryDate(request.getDiaryDate())
+                    .sleep(request.getSleep())
+                    .activityCd(request.getActivityCd())
+                    .imgUrl(request.getImgUrl())
+                    .userId(request.getUserId())
+                    .weather(weather)
+                    .emotionCd(request.getEmotionCd())
+                    .build());
+        }else{
+            throw new CustomException(ErrorEnum.USER_DOES_NOT_MATCH);
+        }
     }
 
     @Override
@@ -72,20 +73,26 @@ public class DiaryServiceImpl implements DiaryService {
         String startDate = request.getYearMonth().concat("01");
         String endDate = request.getYearMonth().concat("31");
 
-        List<Diary> diaries = diaryRepository.findAllByUserIdAndDiaryDateBetween(request.getUserId(), startDate, endDate);
-        log.info("diaryInfo : {}", diaries);
+        UserInfoResponse userInfo = userService.findUserInfo();
 
-        List<DiaryInfo> diaryInfoList = diaries.stream()
-                .map(DiaryInfo::toDto)
-                .peek(this::processDiaryInfo)
-                .collect(Collectors.toList());
-        // 수면 시간 평균값 구하기
-        int sleepAvg = calculateAverageSleep(diaryInfoList);
+        if(Objects.equals(request.getUserId(), userInfo.getUserId())) {
+            List<Diary> diaries = diaryRepository.findAllByUserIdAndDiaryDateBetween(request.getUserId(), startDate, endDate);
+            log.info("diaryInfo : {}", diaries);
 
-        return DiaryInfoResponse.builder()
-                .diaryInfoList(diaryInfoList)
-                .sleepAvg(sleepAvg)
-                .build();
+            List<DiaryInfo> diaryInfoList = diaries.stream()
+                    .map(DiaryInfo::toDto)
+                    .peek(this::processDiaryInfo)
+                    .collect(Collectors.toList());
+            // 수면 시간 평균값 구하기
+            int sleepAvg = calculateAverageSleep(diaryInfoList);
+
+            return DiaryInfoResponse.builder()
+                    .diaryInfoList(diaryInfoList)
+                    .sleepAvg(sleepAvg)
+                    .build();
+        }else {
+            throw new CustomException(USER_DOES_NOT_MATCH);
+        }
     }
 
     @Override

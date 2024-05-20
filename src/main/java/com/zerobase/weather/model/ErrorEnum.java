@@ -15,6 +15,7 @@ public enum ErrorEnum {
     CAN_NOT_FOUND_DIARY(HttpStatus.NOT_FOUND, "해당 일기 데이터를 찾을 수 없습니다."),
     CAN_NOT_FOUND_WEATHER(HttpStatus.NOT_FOUND, "해당 날씨 데이터를 찾을 수 없습니다."),
     CAN_NOT_UPDATE_DIARY(HttpStatus.EXPECTATION_FAILED, "일기 수정에 실패했습니다."),
+    USER_DOES_NOT_MATCH(HttpStatus.NOT_ACCEPTABLE, "로그인한 회원과 일치하지 않는 회원입니다."),
     ;
 
     private final HttpStatus httpStatus;
