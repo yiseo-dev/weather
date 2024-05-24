@@ -23,7 +23,8 @@ public class SecurityConfig {
     private final String[] PERMIT_URL_ARRAY = {
         /* swagger */
         "/v1/users/**", "/swagger-ui/**", "/v3/api-docs/**"
-      , "/swagger-ui.html", "/swagger/**", "/webjars/**", "/v1/weather/**"
+      , "/swagger-ui.html", "/swagger/**", "/webjars/**"
+      , "/v1/weather/**"
     };
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -37,6 +38,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers(PERMIT_URL_ARRAY).permitAll()
 //                .requestMatchers("/v1/weather/**").hasRole("ADMIN")
                 .requestMatchers("/v1/diaries/**").hasRole("USER")
+                .requestMatchers("/v1/files/**").hasRole("USER")
                 )
                 // JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class).build();

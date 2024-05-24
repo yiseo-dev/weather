@@ -1,4 +1,4 @@
-package com.zerobase.weather.service.impl;
+package com.zerobase.weather.service.diary.impl;
 
 import com.zerobase.weather.entity.Diary;
 import com.zerobase.weather.entity.Weather;
@@ -11,8 +11,8 @@ import com.zerobase.weather.model.response.diary.DiaryInfoResponse;
 import com.zerobase.weather.model.response.user.UserInfoResponse;
 import com.zerobase.weather.repository.DiaryRepository;
 import com.zerobase.weather.repository.WeatherRepository;
-import com.zerobase.weather.service.DiaryService;
-import com.zerobase.weather.service.UserService;
+import com.zerobase.weather.service.diary.DiaryService;
+import com.zerobase.weather.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanWrapperImpl;

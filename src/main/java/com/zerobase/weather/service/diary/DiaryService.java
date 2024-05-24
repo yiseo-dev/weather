@@ -1,4 +1,4 @@
-package com.zerobase.weather.service;
+package com.zerobase.weather.service.diary;
 
 import com.zerobase.weather.model.DiaryInfo;
 import com.zerobase.weather.model.request.diary.CreateDiaryRequest;

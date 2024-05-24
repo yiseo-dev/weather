@@ -1,4 +1,4 @@
-package com.zerobase.weather.service;
+package com.zerobase.weather.service.weather;
 
 import com.zerobase.weather.model.request.weather.CreateWeatherCityRequest;
 import com.zerobase.weather.model.response.feign.WeatherInfoResponse;
