@@ -5,7 +5,7 @@ import com.zerobase.weather.model.JwtToken;
 import com.zerobase.weather.model.request.user.SignInRequest;
 import com.zerobase.weather.model.request.user.SignUpRequest;
 import com.zerobase.weather.model.response.user.UserInfoResponse;
-import com.zerobase.weather.service.UserService;
+import com.zerobase.weather.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.zerobase.weather.service.impl;
+package com.zerobase.weather.service.user.impl;
 
 import com.zerobase.weather.entity.Users;
 import com.zerobase.weather.exception.CustomException;

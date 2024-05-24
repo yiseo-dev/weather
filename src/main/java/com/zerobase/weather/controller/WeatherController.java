@@ -3,7 +3,7 @@ package com.zerobase.weather.controller;
 import com.zerobase.weather.config.Response;
 import com.zerobase.weather.model.request.weather.CreateWeatherCityRequest;
 import com.zerobase.weather.model.response.feign.WeatherInfoResponse;
-import com.zerobase.weather.service.WeatherService;
+import com.zerobase.weather.service.weather.WeatherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

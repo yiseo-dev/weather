@@ -1,4 +1,4 @@
-package com.zerobase.weather.service;
+package com.zerobase.weather.service.user;
 
 import com.zerobase.weather.model.JwtToken;
 import com.zerobase.weather.model.request.user.SignInRequest;

@@ -1,23 +1,17 @@
 package com.zerobase.weather.controller;
 
 import com.zerobase.weather.config.Response;
-import com.zerobase.weather.exception.CustomException;
 import com.zerobase.weather.model.DiaryInfo;
-import com.zerobase.weather.model.ErrorEnum;
 import com.zerobase.weather.model.request.diary.CreateDiaryRequest;
 import com.zerobase.weather.model.request.diary.FindDiaryRequest;
 import com.zerobase.weather.model.request.diary.UpdateDiaryRequest;
 import com.zerobase.weather.model.response.diary.DiaryInfoResponse;
-import com.zerobase.weather.model.response.user.UserInfoResponse;
-import com.zerobase.weather.service.DiaryService;
-import com.zerobase.weather.service.UserService;
+import com.zerobase.weather.service.diary.DiaryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Objects;
 
 @Slf4j
 @RestController

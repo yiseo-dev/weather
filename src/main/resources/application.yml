@@ -20,6 +20,13 @@ jwt:
 weather:
   key: cab8a38e7e6dd8318966f39499350716
 
+amazon:
+  aws:
+    accessKey: ${AWS_BUCKET_ACCESS_KEY}
+    secretKey: ${AWS_BUCKET_SECRET_KEY}
+    region: ap-northeast-2
+    bucket: diary-image-bucket
+
 logging:
   level:
     org.hibernate.SQL: debug

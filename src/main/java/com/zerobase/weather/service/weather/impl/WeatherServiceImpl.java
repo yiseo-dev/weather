@@ -1,4 +1,4 @@
-package com.zerobase.weather.service.impl;
+package com.zerobase.weather.service.weather.impl;
 
 import com.zerobase.weather.entity.Weather;
 import com.zerobase.weather.feign.WeatherClient;
@@ -9,7 +9,7 @@ import com.zerobase.weather.model.request.weather.CreateWeatherCityRequest;
 import com.zerobase.weather.model.response.feign.WeatherInfoResponse;
 import com.zerobase.weather.model.response.weather.WeatherConvertResponse;
 import com.zerobase.weather.repository.WeatherRepository;
-import com.zerobase.weather.service.WeatherService;
+import com.zerobase.weather.service.weather.WeatherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
