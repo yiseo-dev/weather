@@ -6,6 +6,7 @@ import com.zerobase.weather.model.request.user.SignInRequest;
 import com.zerobase.weather.model.request.user.SignUpRequest;
 import com.zerobase.weather.model.response.user.UserInfoResponse;
 import com.zerobase.weather.service.user.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/sign-in")
+    @Operation(summary = "로그인", description = "토큰 발급 받는 API", tags = {"UserController"})
     public JwtToken signIn(@RequestBody SignInRequest request) {
         log.info("=================[START] SignIn==================");
         log.info("request: {}", request);
@@ -32,6 +34,7 @@ public class UserController {
         return jwtToken;
     }
     @GetMapping("/user-info")
+    @Operation(summary = "회원 정보 조회", description = "토큰 통한 회원 정보 조회", tags = {"UserController"})
     public ResponseEntity<Response> findUserInfo() {
         log.info("=================[START] findUserInfo==================");
 
@@ -44,6 +47,7 @@ public class UserController {
                 .build());
     }
     @PostMapping("/sign-up")
+    @Operation(summary = "회원 가입", description = "회원 가입 API", tags = {"UserController"})
     public ResponseEntity<HttpStatus> regUser(@RequestBody SignUpRequest request) {
         log.info("=================[START] regUser==================");
         log.info("request: {}", request);

@@ -19,7 +19,7 @@ public class FileController {
     private final FileService fileService;
 
     @Operation(summary = "서명된 url 요청", description = "이미지 업로드 전 권한 url 받기 위한 api", tags = { "File Controller" })
-    @GetMapping("/presigned-url")
+    @GetMapping("/presigned-url/upload")
     public ResponseEntity<Response> generatePresignedUrl(UploadFileRequest request) {
         log.info("=================[START] generatePresignedUrl==================");
         log.info("request: {}", request);
@@ -32,4 +32,10 @@ public class FileController {
                         .data(presignedUrl)
                         .build());
     }
+
+//    @Operation(summary = "이미지 조회 url 요청", description = "이미지 조회 전 권한 url api")
+//    @GetMapping("/presigend-url/view")
+//    public ResponseEntity<Response> generatePresignedUrlForView() {
+//
+//    }
 }
