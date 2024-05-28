@@ -11,7 +11,6 @@ import com.pys.weather.repository.DiaryRepository;
 import com.pys.weather.repository.WeatherRepository;
 import com.pys.weather.service.diary.DiaryService;
 import com.pys.weather.service.user.UserService;
-import com.zerobase.weather.model.*;
 import com.pys.weather.model.request.diary.FindDiaryRequest;
 import com.pys.weather.model.request.diary.UpdateDiaryRequest;
 import lombok.RequiredArgsConstructor;
