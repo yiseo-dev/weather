@@ -26,7 +26,7 @@ public class Diary {
     @Column(name = "DIARY_CONTENT")
     private String diaryContent;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "WEATHER_ID")
     private Weather weather;
 

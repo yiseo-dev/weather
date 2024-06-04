@@ -36,34 +36,28 @@ public class DiaryServiceImpl implements DiaryService {
     private final UserService userService;
     @Override
     public void createDiary(CreateDiaryRequest request) {
-        Integer locId = null;
-        Weather weather = new Weather();
         UserInfoResponse userInfo = userService.findUserInfo();
 
-        if(Objects.equals(request.getUserId(), userInfo.getUserId())) {
-            for(LocationEnum lc : LocationEnum.values()) {
-                if(userInfo.getLocId() == lc.getLocId()) {
-                    locId = lc.getLocId();
-                }
-            }
-            List<Weather> weatherList = weatherRepository.findByLocIdAndWthDate(locId,getToday());
-            if(!CollectionUtils.isEmpty(weatherList)) {
-                weather = weatherList.get(0);
-            }
-
-            diaryRepository.save(Diary.builder()
-                    .diaryContent(request.getDiaryContent())
-                    .diaryDate(request.getDiaryDate())
-                    .sleep(request.getSleep())
-                    .activityCd(request.getActivityCd())
-                    .imgUrl(request.getImgUrl())
-                    .userId(request.getUserId())
-                    .weather(weather)
-                    .emotionCd(request.getEmotionCd())
-                    .build());
-        }else{
+        if(!Objects.equals(request.getUserId(),userInfo.getUserId())) {
             throw new CustomException(ErrorEnum.USER_DOES_NOT_MATCH);
         }
+        Integer locId = getLocationId(userInfo.getLocId());
+        Weather weather = getWeather(locId,request.getDiaryDate());
+
+        Diary.DiaryBuilder diaryBuilder = Diary.builder()
+                .diaryContent(request.getDiaryContent())
+                .diaryDate(request.getDiaryDate())
+                .sleep(request.getSleep())
+                .activityCd(request.getActivityCd())
+                .imgUrl(request.getImgUrl())
+                .userId(request.getUserId())
+                .weather(weather)
+                .emotionCd(request.getEmotionCd());
+
+        if(weather != null) {
+            diaryBuilder.weather(weather);
+        }
+        diaryRepository.save(diaryBuilder.build());
     }
 
     @Override
@@ -138,6 +132,23 @@ public class DiaryServiceImpl implements DiaryService {
     @Transactional
     public void deletDiaryById(Long diaryId) {
         diaryRepository.deleteById(diaryId);
+    }
+
+    private Integer getLocationId(Integer locId) {
+        for(LocationEnum lc : LocationEnum.values()) {
+            if(lc.getLocId().equals(locId)) {
+                return lc.getLocId();
+            }
+        }
+        return null;
+    }
+
+    private Weather getWeather(Integer locId,String date) {
+        List<Weather> weatherList = weatherRepository.findByLocIdAndWthDate(locId, date);
+        if(!CollectionUtils.isEmpty(weatherList)) {
+            return weatherList.get(0);
+        }
+        return null;
     }
 
     private void setProperty(Diary diary, String propertyName, Object value) {
