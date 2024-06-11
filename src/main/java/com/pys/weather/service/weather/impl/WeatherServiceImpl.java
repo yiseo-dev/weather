@@ -61,7 +61,7 @@ public class WeatherServiceImpl implements WeatherService {
                         .build());
     }
     @Transactional
-    @Scheduled(cron = "0 0 7 * * ?")
+    @Scheduled(cron = "0 0 7 * * *")
 //    @Scheduled(fixedRate = 10000)
     public void weatherSchedule() {
        for(LocationEnum lc : LocationEnum.values()) {
